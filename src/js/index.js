@@ -21,7 +21,7 @@ const elCountryList = document.querySelector('.country-list');
 const elCountryInfo = document.querySelector('.country-info');
 
 // // обробляю подію
-onSearchBoxInput = event => {
+function onSearchBoxInput (event) {
   // event.preventDefault();
 
   // // забираємо зн. з поля вводу
