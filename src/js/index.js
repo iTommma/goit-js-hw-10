@@ -32,7 +32,7 @@ onSearchBoxInput = (event) => {
     // // запит на сервер
     fetchRestCountries(searchedQuery)
     .then(data => {
-        console.dir(data);
+        // console.dir(data);
 
         // // перевіряю що віддає сервер
         // // якщо 1 країну ствоюрюю картку країни
@@ -40,7 +40,6 @@ onSearchBoxInput = (event) => {
             console.log('LENGTH 1');
             elCountryList.innerHTML = '';
             elCountryInfo.innerHTML = createCountryInfo(data);
-            console.dir(data[0].languages);
             return
         }
         // // якщо список до 10 країн створюю HTML список країн
