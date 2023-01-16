@@ -26,5 +26,3 @@ export const createCountryInfo = data => {
     <p class="info_el">Languages: <span class="info_value">${countryLangList}</span></p>
     `;
 };
-
-
