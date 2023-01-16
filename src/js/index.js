@@ -1,6 +1,11 @@
 import '../css/styles.css';
 const DEBOUNCE_DELAY = 300;
 
+// встановити lodash.debounce 
+// $ npm i -g npm
+// $ npm i --save lodash.debounce
+var debounce = require('lodash.debounce');
+
 // імпорт функцій
 import { fetchRestCountries } from './restcountries-api';
 import { createCountryList } from './countries';
@@ -12,12 +17,16 @@ const elCountryList = document.querySelector('.country-list');
 const elCountryInfo = document.querySelector('.country-info');
 
 // // обробляю подію
-onSearchBoxInput = event => {
-    event.preventDefault();
+onSearchBoxInput = () => {
+    // event.preventDefault();
 
     // // забираємо зн. з поля вводу
-    const searchedQuery = event.target.value.trim();
-    // console.log(searchedQuery);
+    const searchedQuery = elSearchBox.value.trim();
+    console.log(searchedQuery);
+
+    debounce(() => {
+      console.log("debounce 2000 ");
+    }, 2000);
 
     // // обробляю відповідь сервера
     fetchRestCountries(searchedQuery)
@@ -45,7 +54,6 @@ onSearchBoxInput = event => {
         elCountryList.innerHTML = '';
         elCountryInfo.innerHTML = '';
         return
-        // postsListEl.innerHTML = createPostsCards(data);
     })
     .catch(err => {
         console.log('catch', err);
@@ -53,19 +61,14 @@ onSearchBoxInput = event => {
     }
 
 // // ловлю подію в полі пошуку
-// elSearchBox.addEventListener('input',onSearchBoxInput);
-
-// elSearchBox.addEventListener(
-//     'input', 
-//     _.debounce(() => { 
-//         console.log("3000")
-//     }, 3000)
-// );
-
 elSearchBox.addEventListener(
-    "input",
-    _.debounce(() => {
-      console.log("Scroll handler call after 300ms pause");
-    }, 3000)
+    'input',
+    debounce(() => {
+        console.log("Scroll handler call after 300ms pause");
+        onSearchBoxInput();
+    }, 1000)
   );
-// console.dir(elSearchBox);
+
+
+
+
