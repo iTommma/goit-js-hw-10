@@ -1,5 +1,6 @@
 'use strict';
 
+// // 
 export const createCountryList = data => {
     return data.map( el => {
         return `<li class="list_item">
@@ -9,7 +10,7 @@ export const createCountryList = data => {
     }).join('');
 }
 
-
+// // 
 export const createCountryInfo = data => {
     return `
         <img class="info_img" width="40px" src="${data[0].flags.svg}" alt="${data[0].name.official}">
