@@ -18,3 +18,62 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+
+ul,
+ol {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+
+
+
+
+.list_item{
+}
+
+.list_title{
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 0.5;
+}
+
+.list_img,
+.info_img{
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 15px;
+  width: 30px;
+  height: 100%;
+}
+
+.info_title{
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 50px;
+  font-weight: 600;
+  line-height: 0;
+}
+
+.info_el{
+  font-size: 18px;
+  font-weight: 700;
+
+}
+
+.info_value{
+  font-size: 18px;
+  font-weight: 400;
+
+}
