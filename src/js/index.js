@@ -1,12 +1,16 @@
 import '../css/styles.css';
 const DEBOUNCE_DELAY = 300;
 
-// // встановити lodash.debounce 
+// // встановити lodash.debounce https://www.npmjs.com/package/lodash.debounce
 // $ npm i -g npm
 // $ npm i --save lodash.debounce
 var debounce = require('lodash.debounce');
 
-// // імпорт функцій
+// // встановити notiflix https://github.com/notiflix/Notiflix#readme
+// // $ npm i notiflix
+import Notiflix from 'notiflix';
+
+// // імпорт функцій проекту
 import { fetchRestCountries } from './restcountries-api';
 import { createCountryList } from './countries';
 import { createCountryInfo } from './countries'
@@ -17,14 +21,14 @@ const elCountryList = document.querySelector('.country-list');
 const elCountryInfo = document.querySelector('.country-info');
 
 // // обробляю подію
-onSearchBoxInput = () => {
+onSearchBoxInput = (event) => {
     // event.preventDefault();
 
     // // забираємо зн. з поля вводу
     const searchedQuery = elSearchBox.value.trim();
     console.log(searchedQuery);
 
-    // // обробляю відповідь сервера
+    // // запит на сервер
     fetchRestCountries(searchedQuery)
     .then(data => {
         console.dir(data);
@@ -49,22 +53,30 @@ onSearchBoxInput = () => {
         console.log('ARR LENGTH > 10');
         elCountryList.innerHTML = '';
         elCountryInfo.innerHTML = '';
+        Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
         return
     })
     .catch(err => {
         console.log('catch', err);
+        elCountryList.innerHTML = '';
+        elCountryInfo.innerHTML = '';
+        Notiflix.Notify.failure('Oops, there is no country with that name');
         });
     }
 
 // // ловлю подію в полі пошуку
 elSearchBox.addEventListener(
     'input',
-    debounce(() => {
-        console.log("Scroll handler call after 300ms pause");
-        onSearchBoxInput();
-    }, 1000)
+    debounce((event) => {
+        onSearchBoxInput(event);
+    }, DEBOUNCE_DELAY)
   );
 
 
+// e.g. Only message
+// Notiflix.Notify.success('Sol lucet omnibus');
+// Notiflix.Notify.failure('Oops, there is no country with that name');
+// Notiflix.Notify.warning('Memento te hominem esse');
+// Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
 
 
