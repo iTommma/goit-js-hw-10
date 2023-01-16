@@ -1,4 +1,3 @@
-
 import '../css/styles.css';
 const DEBOUNCE_DELAY = 300;
 
@@ -14,7 +13,7 @@ import Notiflix from 'notiflix';
 // // імпорт функцій проекту
 import { fetchRestCountries } from './restcountries-api';
 import { createCountryList } from './countries';
-import { createCountryInfo } from './countries'
+import { createCountryInfo } from './countries';
 
 // // елементи HTML
 const elSearchBox = document.querySelector('#search-box');
@@ -22,61 +21,54 @@ const elCountryList = document.querySelector('.country-list');
 const elCountryInfo = document.querySelector('.country-info');
 
 // // обробляю подію
-onSearchBoxInput = (event) => {
-    // event.preventDefault();
+onSearchBoxInput = event => {
+  // event.preventDefault();
 
-    // // забираємо зн. з поля вводу
-    const searchedQuery = elSearchBox.value.trim();
-    console.log(searchedQuery);
+  // // забираємо зн. з поля вводу
+  const searchedQuery = elSearchBox.value.trim();
+  console.log(searchedQuery);
 
-    // // запит на сервер
-    fetchRestCountries(searchedQuery)
+  // // запит на сервер
+  fetchRestCountries(searchedQuery)
     .then(data => {
-        // console.dir(data);
+      // console.dir(data);
 
-        // // перевіряю що віддає сервер
-        // // якщо 1 країну ствоюрюю картку країни
-        if (data.length === 1){
-            console.log('LENGTH 1');
-            elCountryList.innerHTML = '';
-            elCountryInfo.innerHTML = createCountryInfo(data);
-            return
-        }
-        // // якщо список до 10 країн створюю HTML список країн
-        if (data.length < 10){
-            console.log('ARR LENGTH < 10');
-            elCountryInfo.innerHTML = '';
-            elCountryList.innerHTML = createCountryList(data);
-            return
-        }
-        // // якщо список більше 10 країн
-        console.log('ARR LENGTH > 10');
+      // // перевіряю що віддає сервер
+      // // якщо 1 країну ствоюрюю картку країни
+      if (data.length === 1) {
+        console.log('LENGTH 1');
         elCountryList.innerHTML = '';
+        elCountryInfo.innerHTML = createCountryInfo(data);
+        return;
+      }
+      // // якщо список до 10 країн створюю HTML список країн
+      if (data.length < 10) {
+        console.log('ARR LENGTH < 10');
         elCountryInfo.innerHTML = '';
-        Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
-        return
+        elCountryList.innerHTML = createCountryList(data);
+        return;
+      }
+      // // якщо список більше 10 країн
+      console.log('ARR LENGTH > 10');
+      elCountryList.innerHTML = '';
+      elCountryInfo.innerHTML = '';
+      Notiflix.Notify.info(
+        'Too many matches found. Please enter a more specific name.'
+      );
+      return;
     })
     .catch(err => {
-        console.log('catch', err);
-        elCountryList.innerHTML = '';
-        elCountryInfo.innerHTML = '';
-        Notiflix.Notify.failure('Oops, there is no country with that name');
-        });
-    }
+      console.log('catch', err);
+      elCountryList.innerHTML = '';
+      elCountryInfo.innerHTML = '';
+      Notiflix.Notify.failure('Oops, there is no country with that name');
+    });
+};
 
 // // ловлю подію в полі пошуку
 elSearchBox.addEventListener(
-    'input',
-    debounce((event) => {
-        onSearchBoxInput(event);
-    }, DEBOUNCE_DELAY)
-  );
-
-
-// e.g. Only message
-// Notiflix.Notify.success('Sol lucet omnibus');
-// Notiflix.Notify.failure('Oops, there is no country with that name');
-// Notiflix.Notify.warning('Memento te hominem esse');
-// Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
-
-
+  'input',
+  debounce(event => {
+    onSearchBoxInput(event);
+  }, DEBOUNCE_DELAY)
+);
